@@ -1,0 +1,51 @@
+<!-- Hero Section -->
+<div class="hero bg-gradient-to-br from-primary/10 via-base-200 to-secondary/10 min-h-screen">
+  <div class="hero-content text-center max-w-4xl">
+    <div class="w-full">
+      <div class="mb-8">
+        <div class="badge badge-primary badge-lg mb-4">✨ Now in Beta</div>
+        <h1 class="text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-6">
+          Connect. Share. Inspire.
+        </h1>
+        <p class="text-xl text-base-content/80 max-w-2xl mx-auto leading-relaxed mb-8">
+          Join the next generation social platform where your hobbies come to life. 
+          Share your passion, discover new interests, and connect with like-minded creators.
+        </p>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+        <%= link_to new_session_path, class: "btn btn-primary btn-lg px-8" do %>
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+          Get Started Free
+        <% end %>
+        <button class="btn btn-outline btn-lg px-8">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Watch Demo
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats stats-vertical lg:stats-horizontal shadow-lg bg-base-100/50 backdrop-blur">
+        <div class="stat">
+          <div class="stat-title">Active Users</div>
+          <div class="stat-value text-primary">2.5K+</div>
+          <div class="stat-desc">Growing daily</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Posts Shared</div>
+          <div class="stat-value text-secondary">15K+</div>
+          <div class="stat-desc">This month</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Communities</div>
+          <div class="stat-value text-accent">100+</div>
+          <div class="stat-desc">And counting</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

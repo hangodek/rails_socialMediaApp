@@ -8,12 +8,18 @@
   <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
   <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
 
-  <%= form_with url: registers_path, html: {class: "flex flex-col gap-4"} do |form| %>
+  <%= form_with model: @user, url: registers_path, html: {class: "flex flex-col gap-4"} do |form| %>
     <div>
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "input" %><br>
+      <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", placeholder: "Username", class: "input" %>
     </div>
     <div>
-      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "input" %><br>
+      <%= form.email_field :email_address, required: true, autocomplete: "email", placeholder: "Email address", class: "input" %>
+    </div>
+    <div>
+      <%= form.email_field :email_confirmation, required: true, autocomplete: "email", placeholder: "Confirm Email address", class: "input" %>
+    </div>
+    <div>
+      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Password", maxlength: 72, class: "input" %>
     </div>
     <%= form.submit "Register", class: "btn" %>
   <% end %>

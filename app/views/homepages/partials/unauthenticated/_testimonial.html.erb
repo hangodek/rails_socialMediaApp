@@ -1,0 +1,115 @@
+<!-- Testimonials Section -->
+<section class="py-20 bg-base-200">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold mb-4">What Our Community Says</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <div class="flex items-center mb-4">
+            <div class="avatar">
+              <div class="w-12 rounded-full bg-primary/20">
+                <div class="flex items-center justify-center h-full text-primary font-bold">A</div>
+              </div>
+            </div>
+            <div class="ml-3">
+              <h4 class="font-semibold">Alex Chen</h4>
+              <p class="text-sm text-base-content/60">Photography Enthusiast</p>
+            </div>
+          </div>
+          <p class="text-base-content/80">
+            "Finally, a platform where I can share my photography without the algorithm chaos. 
+            The community here actually cares about the craft!"
+          </p>
+          <div class="rating rating-sm mt-2">
+            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <div class="flex items-center mb-4">
+            <div class="avatar">
+              <div class="w-12 rounded-full bg-secondary/20">
+                <div class="flex items-center justify-center h-full text-secondary font-bold">M</div>
+              </div>
+            </div>
+            <div class="ml-3">
+              <h4 class="font-semibold">Maria Rodriguez</h4>
+              <p class="text-sm text-base-content/60">Cooking Creator</p>
+            </div>
+          </div>
+          <p class="text-base-content/80">
+            "The recipe sharing features are incredible! I've connected with home cooks 
+            from around the world and learned so many new techniques."
+          </p>
+          <div class="rating rating-sm mt-2">
+            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl md:col-span-2 lg:col-span-1">
+        <div class="card-body">
+          <div class="flex items-center mb-4">
+            <div class="avatar">
+              <div class="w-12 rounded-full bg-accent/20">
+                <div class="flex items-center justify-center h-full text-accent font-bold">J</div>
+              </div>
+            </div>
+            <div class="ml-3">
+              <h4 class="font-semibold">Jordan Kim</h4>
+              <p class="text-sm text-base-content/60">DIY Maker</p>
+            </div>
+          </div>
+          <p class="text-base-content/80">
+            "Love how easy it is to document my projects step-by-step. 
+            The community feedback has helped me improve so much!"
+          </p>
+          <div class="rating rating-sm mt-2">
+            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-primary to-secondary">
+  <div class="container mx-auto px-4 text-center">
+    <div class="max-w-3xl mx-auto text-primary-content">
+      <h2 class="text-4xl font-bold mb-6">Ready to Share Your Passion?</h2>
+      <p class="text-xl mb-8 opacity-90">
+        Join thousands of creators who are already building amazing communities around their hobbies.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <%= link_to new_session_path, class: "btn btn-base-100 btn-lg px-8 text-primary" do %>
+          Start Your Journey
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        <% end %>
+        <button class="btn btn-outline btn-lg px-8 text-primary-content border-primary-content hover:bg-primary-content hover:text-primary">
+          Learn More
+        </button>
+      </div>
+      <p class="text-sm mt-4 opacity-75">No credit card required • Free forever plan available</p>
+    </div>
+  </div>
+</section>

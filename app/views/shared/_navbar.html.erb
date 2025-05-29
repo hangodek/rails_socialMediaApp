@@ -20,7 +20,7 @@
           </a>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><%= button_to "Log out", session_path, method: :delete, class: "link no-underline", data: {turbo_confirm: "Are you sure ? "} %> </li>
       </ul>
     </div>
   </div>
