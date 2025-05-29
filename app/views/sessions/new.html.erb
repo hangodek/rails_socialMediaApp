@@ -10,7 +10,7 @@
 
   <%= form_with url: session_path, html: {class: "flex flex-col gap-4"} do |form| %>
     <div>
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "input" %><br>
+      <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:username], class: "input" %><br>
     </div>
     <div>
       <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "input" %><br>
