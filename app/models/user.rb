@@ -2,6 +2,20 @@ class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
 
+
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :likes
+
+  has_many :liked_comments, through: :likes, source: :likeable, source_type: "Comment"
+  has_many :liked_posts, through: :likes, source: :likeable, source_type: "Post"
+
+  has_many :active_follows, class_name: "Follow", foreign_key: "follower_id", dependent: :destroy
+  has_many :followings, through: :active_follows, source: :following
+
+  has_many :passive_follows, class_name: "Follow", foreign_key: "following_id", dependent: :destroy
+  has_many :followers, through: :passive_follows, source: :follower
+
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   validates :username, presence: true, length: { minimum: 6 }, uniqueness: true
