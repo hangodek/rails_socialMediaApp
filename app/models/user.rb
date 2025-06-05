@@ -29,4 +29,22 @@ class User < ApplicationRecord
       errors.add(:email_confirmation, "does not match email address")
     end
   end
+
+  def self.authenticate_by_omni_auth(auth)
+    if User.find_by(email_address: auth.info.email)
+      user = User.find_by(email_address: auth.info.email)
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.save
+      user
+    else
+      user = User.find_or_initialize_by(provider: auth.provider, uid: auth.uid)
+      user.email_address = auth.info.email
+      user.email_confirmation = auth.info.email
+      user.username = SecureRandom.hex(5)
+      user.password = SecureRandom.hex(10)
+      user.save
+      user
+    end
+  end
 end

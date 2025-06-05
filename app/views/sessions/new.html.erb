@@ -2,7 +2,7 @@
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
 <% end %>
 
-<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+<fieldset class="fieldset border-base-300 rounded-box w-xs border p-4">
   <legend class="fieldset-legend">Login</legend>
 
   <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
@@ -10,12 +10,17 @@
 
   <%= form_with url: session_path, html: {class: "flex flex-col gap-4"} do |form| %>
     <div>
-      <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:username], class: "input" %><br>
+      <%= form.text_field :username, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your username", value: params[:username], class: "input" %><br>
     </div>
     <div>
       <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "input" %><br>
     </div>
-    <%= form.submit "Sign in", class: "btn" %>
+    <%= form.submit "Sign in", class: "btn bg-white" %>
+  <% end %>
+
+  <%= button_to "/auth/google_oauth2", method: :post, data: {turbo: false}, class: "btn bg-white w-full" do %>
+    <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
+    Login with Google
   <% end %>
 
   <div class="flex justify-between">
