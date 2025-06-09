@@ -11,8 +11,10 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.13",
+    "@rails/actiontext": "^8.0.200",
     "@tailwindcss/cli": "^4.1.7",
     "daisyui": "^5.0.40",
-    "tailwindcss": "^4.1.7"
+    "tailwindcss": "^4.1.7",
+    "trix": "^2.1.15"
   }
 }

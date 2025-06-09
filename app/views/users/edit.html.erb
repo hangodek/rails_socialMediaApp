@@ -1,0 +1,56 @@
+<%= render "shared/navbar" %>
+
+<div class="min-h-screen bg-base-100 py-12 px-4">
+  <div class="container mx-auto max-w-4xl">
+    <!-- Main Content -->
+    <div class="card bg-base-100 shadow-lg border border-base-200 overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
+        
+        <!-- Left Column - User Profile Picture -->
+        <div class="md:col-span-1 bg-base-200/50 p-8 flex flex-col items-center justify-start">
+          <div class="avatar mb-6">
+            <div class="w-32 h-32 rounded-full ring ring-primary/30 ring-offset-base-100 ring-offset-2">
+              <img src="/placeholder.svg?height=128&width=128" alt="Profile Picture" />
+            </div>
+          </div>
+          
+          <h2 class="text-xl font-semibold text-center mb-1">Alex Johnson</h2>
+          <p class="text-base-content/60 text-center text-sm mb-6">@alexjohnson</p>
+          
+          <label for="avatar" class="btn btn-sm btn-outline w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Change Photo
+          </label>
+          <input type="file" id="avatar" name="user[avatar]" class="hidden" accept="image/*" />
+        </div>
+        
+        <!-- Right Column - User Information Form -->
+        <div class="md:col-span-2 p-8">
+          <h3 class="text-lg font-medium mb-6">Account Information</h3>
+          
+          <!-- User Edit Form -->
+          <%= form_with url: users_path, method: :put, html: {class: "flex flex-col gap-4"} do |form| %>
+            <div class="flex items-center justify-between">
+              <%= form.label "Username :" %>
+              <%= form.text_field :username, placeholder: "Username", value: Current.user.username, class: "input" %>
+            </div>
+            <div class="flex items-center justify-between">
+              <%= form.label "Email Address :" %>
+              <%= form.text_field :email_address, placeholder: "Email Address", value: Current.user.email_address, disabled: true, class: "input" %>
+            </div>
+            <div class="flex items-center justify-between">
+              <%= form.label "Password :" %>
+              <%= form.text_field :password, placeholder: "Password", class: "input" %>
+            </div>
+
+            <div class="self-end">
+              <%= form.submit "Change Username and Password", class: "btn btn-primary"%>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
