@@ -18,17 +18,11 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
-  validates :username, presence: true, length: { minimum: 6 }, uniqueness: true
-  validates :email_address, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "must be a valid email address" }
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :username, presence: true, length: { minimum: 6 }, uniqueness: true, if: -> { new_record? || username_changed? }
+  validates :email_address, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "must be a valid email address" }, if: -> { new_record? || email_address_changed? }
+  validates :password, presence: true, length: { minimum: 6 }, if: -> { new_record? || password.present? }
 
   validate :email_confirmation_check
-
-  def email_confirmation_check
-    if email_address != email_confirmation
-      errors.add(:email_confirmation, "does not match email address")
-    end
-  end
 
   def self.authenticate_by_omni_auth(auth)
     if User.find_by(email_address: auth.info.email)
@@ -45,6 +39,14 @@ class User < ApplicationRecord
       user.password = SecureRandom.hex(10)
       user.save
       user
+    end
+  end
+
+  private
+
+  def email_confirmation_check
+    if email_address != email_confirmation
+      errors.add(:email_confirmation, "does not match email address")
     end
   end
 end
