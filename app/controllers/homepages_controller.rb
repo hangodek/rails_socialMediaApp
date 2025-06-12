@@ -1,7 +1,5 @@
 class HomepagesController < ApplicationController
-  allow_unauthenticated_access
-
   def index
-    @user = Current.user
+    @posts = Current.user.posts
   end
 end
