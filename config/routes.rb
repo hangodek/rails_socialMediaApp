@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   resource :users, only: [ :edit, :update ]
   resource :session
   resource :registers, only: [ :new, :create ]
-  resource :posts, only: [ :create, :edit, :update, :destroy ]
+  resources :posts, only: [ :create, :edit, :update, :destroy ] do
+    member do
+      post :like
+      delete :unlike
+    end
+  end
   resources :passwords, param: :token
   # get "homepages/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

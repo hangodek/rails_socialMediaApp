@@ -18,6 +18,26 @@ class PostsController < ApplicationController
   def destroy
   end
 
+  def like
+    @post = Post.find(params[:id])
+    @post.likes.create(user: Current.user)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_back(fallback_location: root_path) }
+    end
+  end
+
+  def unlike
+    @post = Post.find(params[:id])
+    @post.likes.where(user: Current.user).destroy_all
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_back(fallback_location: root_path) }
+    end
+  end
+
   private
 
   def add_post_params
