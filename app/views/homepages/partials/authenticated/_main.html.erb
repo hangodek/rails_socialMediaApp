@@ -104,8 +104,22 @@
                           <span class="text-xs"><%= post.comments.count %></span>
                         </button>
                         <dialog id="comment_modal" class="modal">
-                          <div class="modal-box">
-                            <p class="py-4">Press ESC key or click outside to close</p>
+                          <div class="modal-box flex flex-col gap-4">
+                            <div class="chat chat-start">
+                              <div class="chat-image avatar">
+                                <div class="w-10 rounded-full">
+                                  <img
+                                    alt="Tailwind CSS chat bubble component"
+                                    src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                                  />
+                                </div>
+                              </div>
+                              <div class="chat-header">
+                                Obi-Wan Kenobi
+                                <time class="text-xs opacity-50">12:45</time>
+                              </div>
+                              <div class="bg-base-200 p-4 rounded-lg">You were the Chosen One!</div>
+                            </div>
                             <%= form_with url: session_path do |form| %>
                               <div class="flex gap-1">
                                 <%= form.text_field :content, class: "input grow"%>
