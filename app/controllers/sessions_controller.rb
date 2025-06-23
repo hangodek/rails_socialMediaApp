@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
 
       if user
         start_new_session_for user
-        redirect_to after_authentication_url
+        redirect_to homepages_path
       else
         flash.now[:alert] = "OmniAuth authentication failed."
         render :new, layout: "session", status: :unprocessable_entity
@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
 
       if user
         start_new_session_for user
-        redirect_to after_authentication_url
+        redirect_to homepages_path
       else
         flash.now[:alert] = "Invalid username or password."
         render :new, layout: "session", status: :unprocessable_entity

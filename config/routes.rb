@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  resources :homepages, only: [ :index ]
   resource :users, only: [ :edit, :update ]
   resource :session
   resource :registers, only: [ :new, :create ]
   resources :posts, only: [ :create, :edit, :update, :destroy ] do
+    resource :comments, only: [ :create, :update, :destroy ]
     member do
       post :like
       delete :unlike
@@ -25,5 +27,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "homepages#index"
+  root "landing#index"
 end

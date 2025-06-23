@@ -1,17 +1,3 @@
-<% if !authenticated? %>
+<%= render "shared/navbar" %>
 
-    <%= render "homepages/partials/unauthenticated/hero" %>
-
-    <%= render "homepages/partials/unauthenticated/feature" %>
-
-    <%= render "homepages/partials/unauthenticated/testimonial" %>
-
-    <%= render "homepages/partials/unauthenticated/footer" %>
-
-<% else %>
-
-    <%= render "shared/navbar" %>
-
-    <%= render "homepages/partials/authenticated/main" %>
-
-<% end %>
+<%= render "homepages/partials/authenticated/main" %>
