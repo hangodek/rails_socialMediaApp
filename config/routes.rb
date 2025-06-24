@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resource :session
   resource :registers, only: [ :new, :create ]
   resources :posts, only: [ :create, :edit, :update, :destroy ] do
-    resource :comments, only: [ :create, :update, :destroy ]
+    resources :comments, only: [ :create, :update, :destroy ]
     member do
       post :like
       delete :unlike

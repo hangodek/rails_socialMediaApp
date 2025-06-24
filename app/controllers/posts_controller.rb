@@ -3,9 +3,9 @@ class PostsController < ApplicationController
     @post = Post.new(add_post_params.merge(user: Current.user))
 
     if @post.save
-      redirect_to root_path
+      redirect_back_or_to(root_path)
     else
-      redirect_to root_path, alert: @post.errors.full_messages.to_sentence
+      redirect_back_or_to(fallback_location: root_path, alert: @post.errors.full_messages.to_sentence, status: :see_other)
     end
   end
 

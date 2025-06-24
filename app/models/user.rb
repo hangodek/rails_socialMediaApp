@@ -24,6 +24,8 @@ class User < ApplicationRecord
 
   validate :email_confirmation_check
 
+  after_commit :create_user_default_avatar
+
   def self.authenticate_by_omni_auth(auth)
     if User.find_by(email_address: auth.info.email)
       user = User.find_by(email_address: auth.info.email)
@@ -39,6 +41,12 @@ class User < ApplicationRecord
       user.password = SecureRandom.hex(10)
       user.save
       user
+    end
+  end
+
+  def create_user_default_avatar
+    unless avatar.attached?
+      avatar.attach(io: File.open(Rails.root.join("app", "assets", "images", "avatar.png")), filename: "default_avatar.png", content_type: "image/png")
     end
   end
 

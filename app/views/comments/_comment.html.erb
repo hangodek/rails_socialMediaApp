@@ -1,0 +1,14 @@
+<div class="chat chat-start">
+	<div class="chat-image avatar">
+		<div class="w-10 rounded-full">
+			<% if comment.user.avatar.attached? %>
+				<%= image_tag comment.user.avatar %>
+			<% end %>
+		</div>
+	</div>
+	<div class="chat-header">
+		<%= comment.user.username %>
+		<time class="text-xs opacity-50"><%= time_ago_in_words(comment.created_at) %> ago</time>
+	</div>
+	<div class="bg-base-200 p-4 rounded-lg"><%= comment.content %></div>
+</div>
