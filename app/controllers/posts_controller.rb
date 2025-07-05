@@ -16,6 +16,11 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    @post = Post.find(params.expect(:id))
+
+    if @post.destroy
+      redirect_back_or_to(root_path)
+    end
   end
 
   def like

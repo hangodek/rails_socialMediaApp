@@ -1,0 +1,10 @@
+<% if @pagy.next %>
+  <%= turbo_frame_tag(
+    "posts_pagy_container_#{@pagy.next}",
+    loading: :lazy,
+    src: homepages_path(page: @pagy.next),
+    target: "_top"
+  ) do %>
+    Loading....
+  <% end %>
+<% end %>

@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.prepend(
-            "comment_container_for_post_#{@post.id}",
+            @post,
             partial: "comments/comment",
             locals: { comment: @comment }
           )

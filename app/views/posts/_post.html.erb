@@ -18,12 +18,17 @@
 					<p class="text-xs text-base-content/60"><%= time_ago_in_words(post.created_at) %></p>
 				</div>
 			</div>
-			<div class="dropdown dropdown-end">
-				<button class="btn btn-ghost btn-sm btn-circle">
+			<div class="dropdown">
+				<div tabindex="0" role="button" class="btn btn-ghost btn-sm btn-circle">
 					<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
 						<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
 					</svg>
-				</button>
+				</div>
+				<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-36 p-2 shadow-sm">
+					<% if post.user == Current.user %>
+						<%= button_to "Delete Post", post_path(post), method: :delete, data: {turbo_confirm: "Are you sure? "}, class: "btn btn-error w-full" %>
+					<% end %>
+				</ul>
 			</div>
 		</div>
 		
@@ -64,14 +69,14 @@
 					<span class="text-xs"><%= post.comments.count %></span>
 				</button>
 				<dialog id="comment_modal_for_post_<%= post.id %>" class="modal">
-					<div id="comment_container_for_post_<%= post.id %>" class="modal-box flex flex-col justify-end gap-4 p-4">
+					<div id="<%= dom_id(post) %>" class="modal-box justify-end overflow-auto max-w-96 max-h-96">
 						
 						<%# Comment partial %>
 						<%= render post.comments %>
 
 						<%= form_with model: [post, post.comments.build] do |form| %>
-							<div class="flex gap-1">
-								<%= form.text_field :content, class: "input grow"%>
+							<div class="flex gap-1 mt-4">
+								<%= form.text_field :content, class: "input grow", placeholder: "What's on your mind, #{Current.user.username}" %>
 								<%= form.submit ">", class: "btn"%>
 							</div>
 						<% end %>

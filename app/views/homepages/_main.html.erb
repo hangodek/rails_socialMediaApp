@@ -33,13 +33,16 @@
           </div>
         </div>
         
-        
         <!-- Posts Feed -->
-        <div class="space-y-6">
-          <% if @posts %>
-            <%= render @posts %>
-          <% end %>
-        </div>
+        <%= turbo_frame_tag "posts_pagy_container_#{@pagy.page}" do %>
+          <div class="space-y-6">
+            <% if @posts %>
+              <%= render @posts %>
+              <%= render "posts/next_page" %>
+            <% end %>
+          </div>
+        <% end %>
+        
       </div>
       
       <!-- Right Sidebar - Suggestions -->
