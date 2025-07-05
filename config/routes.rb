@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :homepages, only: [ :index ]
-  resource :users, only: [ :edit, :update ]
+  resources :users, only: [ :show, :edit, :update ]
   resource :session
   resource :registers, only: [ :new, :create ]
   resources :posts, only: [ :create, :edit, :update, :destroy ] do

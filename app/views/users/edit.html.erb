@@ -23,8 +23,7 @@
           <h2 class="text-xl font-semibold text-center mb-1"><%= Current.user.username %></h2>
           <p class="text-base-content/60 text-center text-sm mb-6">@<%= Current.user.username%></p>
           
-         
-          <%= form_with model: @user, url: users_path, method: :put, multipart: true, class: "flex flex-col gap-4 justify-center items-center" do |form| %>
+          <%= form_with model: @user, url: user_path, method: :put, multipart: true, class: "flex flex-col gap-4 justify-center items-center" do |form| %>
             <div>
               <%= form.label :avatar, class: "btn btn-sm btn-outline w-full" do %>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -45,7 +44,7 @@
           <h3 class="text-lg font-medium mb-6">Account Information</h3>
           
           <!-- User Edit Form -->
-          <%= form_with model: @user, url: users_path, method: :put,  html: {class: "flex flex-col gap-4"} do |form| %>
+          <%= form_with model: @user, url: user_path, method: :put,  html: {class: "flex flex-col gap-4"} do |form| %>
             <div class="flex items-center justify-between">
               <%= form.label "Username :" %>
               <%= form.text_field :username, placeholder: "Username", required: true, value: Current.user.username, class: "input" %>
