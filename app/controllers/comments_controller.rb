@@ -1,4 +1,9 @@
 class CommentsController < ApplicationController
+  def index
+  end
+
+  def show
+  end
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.build(add_comment_params.merge(user: Current.user))
@@ -7,7 +12,7 @@ class CommentsController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.prepend(
-            @post,
+            "comment_container_for_post_#{@post.id}",
             partial: "comments/comment",
             locals: { comment: @comment }
           )

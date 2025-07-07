@@ -1,15 +1,16 @@
-<!-- Post 1 -->
-<div class="card bg-base-100 shadow-lg border border-base-200">
+<div id="<%= dom_id(post) %>" class="card bg-base-100 shadow-lg border border-base-200">
 	<div class="card-body p-4">
 		<!-- Post Header -->
 		<div class="flex items-center justify-between mb-3">
 			<div class="flex items-center gap-3">
 				<div class="avatar">
 					<div class="w-10 h-10 rounded-full">
-						<% if Current.user.avatar.attached? && Current.user.avatar.persisted? %>
-							<%= image_tag Current.user.avatar %>
-						<% else %>
-							<%= image_tag "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" %>
+						<%= link_to user_path(Current.user), data: {turbo: false} do %>
+							<% if Current.user.avatar.attached? && Current.user.avatar.persisted? %>
+								<%= image_tag Current.user.avatar %>
+							<% else %>
+								<%= image_tag "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" %>
+							<% end %>
 						<% end %>
 					</div>
 				</div>
@@ -69,12 +70,12 @@
 					<span class="text-xs"><%= post.comments.count %></span>
 				</button>
 				<dialog id="comment_modal_for_post_<%= post.id %>" class="modal">
-					<div id="<%= dom_id(post) %>" class="modal-box justify-end overflow-auto max-w-96 max-h-96">
+					<div id="comment_container_for_post_<%= post.id %>" class="modal-box justify-end overflow-auto max-w-96 max-h-96">
 						
 						<%# Comment partial %>
 						<%= render post.comments.order(created_at: :desc) %>
 
-						<%= form_with model: [post, post.comments.build] do |form| %>
+						<%= form_with model: [post, post.comments.build], data: {controller: "resetform", action: "turbo:submit-end->resetform#reset"} do |form| %>
 							<div class="flex gap-1 mt-4">
 								<%= form.text_field :content, class: "input grow", placeholder: "What's on your mind, #{Current.user.username}" %>
 								<%= form.submit ">", class: "btn"%>
