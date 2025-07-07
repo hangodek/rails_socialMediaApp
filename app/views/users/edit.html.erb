@@ -11,8 +11,8 @@
         <div class="md:col-span-1 bg-base-200/50 p-8 flex flex-col items-center justify-start">
           <div class="avatar mb-6">
             <div class="w-32 h-32 rounded-full ring ring-primary/30 ring-offset-base-100 ring-offset-2">
-            <% if Current.user.avatar.attached? && Current.user.avatar.persisted? %>
-              <%= image_tag Current.user.avatar, size: "200x16", class: "w-full h-full  rounded-full" %>
+            <% if @user.avatar.attached? && @user.avatar.persisted? %>
+              <%= image_tag @user.avatar, size: "200x16", class: "w-full h-full  rounded-full" %>
             <% else %>
               <!-- Default Avatar Image -->
               <%= image_tag "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp", class: "w-full h-full rounded-full" %>
@@ -20,8 +20,8 @@
             </div>
           </div>
           
-          <h2 class="text-xl font-semibold text-center mb-1"><%= Current.user.username %></h2>
-          <p class="text-base-content/60 text-center text-sm mb-6">@<%= Current.user.username%></p>
+          <h2 class="text-xl font-semibold text-center mb-1"><%= @user.username %></h2>
+          <p class="text-base-content/60 text-center text-sm mb-6">@<%= @user.username%></p>
           
           <%= form_with model: @user, url: user_path, method: :put, multipart: true, class: "flex flex-col gap-4 justify-center items-center" do |form| %>
             <div>
@@ -47,11 +47,11 @@
           <%= form_with model: @user, url: user_path, method: :put,  html: {class: "flex flex-col gap-4"} do |form| %>
             <div class="flex items-center justify-between">
               <%= form.label "Username :" %>
-              <%= form.text_field :username, placeholder: "Username", required: true, value: Current.user.username, class: "input" %>
+              <%= form.text_field :username, placeholder: "Username", required: true, value: @user.username, class: "input" %>
             </div>
             <div class="flex items-center justify-between">
               <%= form.label "Email Address :" %>
-              <%= form.text_field :email_address, placeholder: "Email Address", value: Current.user.email_address, disabled: true, class: "input" %>
+              <%= form.text_field :email_address, placeholder: "Email Address", value: @user.email_address, disabled: true, class: "input" %>
             </div>
             <div class="flex items-center justify-between">
               <%= form.label "Password :" %>
