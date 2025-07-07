@@ -5,9 +5,9 @@
 			<div class="flex items-center gap-3">
 				<div class="avatar">
 					<div class="w-10 h-10 rounded-full">
-						<%= link_to user_path(Current.user), data: {turbo: false} do %>
-							<% if Current.user.avatar.attached? && Current.user.avatar.persisted? %>
-								<%= image_tag Current.user.avatar %>
+						<%= link_to user_path(post.user), data: {turbo: false} do %>
+							<% if post.user.avatar.attached? && post.user.avatar.persisted? %>
+								<%= image_tag post.user.avatar %>
 							<% else %>
 								<%= image_tag "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" %>
 							<% end %>
@@ -15,8 +15,10 @@
 					</div>
 				</div>
 				<div>
-					<h4 class="font-semibold text-sm"><%= Current.user.username %></h4>
-					<p class="text-xs text-base-content/60"><%= time_ago_in_words(post.created_at) %></p>
+					<%= link_to user_path(post.user), data: {turbo: false} do %>
+						<h4 class="font-semibold text-sm"><%= post.user.username %></h4>
+						<p class="text-xs text-base-content/60"><%= time_ago_in_words(post.created_at) %></p>
+					<% end %>
 				</div>
 			</div>
 			<div class="dropdown">
