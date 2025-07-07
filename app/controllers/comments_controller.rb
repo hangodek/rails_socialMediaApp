@@ -1,5 +1,8 @@
 class CommentsController < ApplicationController
+  include Pagy::Backend
   def index
+    @post = Post.find(params[:post_id])
+    @pagy, @comments = pagy_countless(@post.comments.includes(:user))
   end
 
   def show

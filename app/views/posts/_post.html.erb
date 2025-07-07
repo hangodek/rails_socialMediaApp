@@ -73,7 +73,14 @@
 					<div id="comment_container_for_post_<%= post.id %>" class="modal-box justify-end overflow-auto max-w-96 max-h-96">
 						
 						<%# Comment partial %>
-						<%= render post.comments.order(created_at: :desc) %>
+						<%= turbo_frame_tag(
+							"comments_pagy_container_1",
+							loading: :lazy,
+							src: post_comments_path(post, page: 1),
+							target: "_top"
+						) do %>
+							Loading....
+						<% end %>
 
 						<%= form_with model: [post, post.comments.build], data: {controller: "resetform", action: "turbo:submit-end->resetform#reset"} do |form| %>
 							<div class="flex gap-1 mt-4">

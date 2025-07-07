@@ -10,11 +10,11 @@
 
 puts "Seeding database....."
 
-100.times do
-  Post.find(32) do |post|
+15.times do
+  Post.find(33) do |post|
     post.comments.create!(
       user: User.find(1),
-      content: "asdasdhjdsjashdjahsdj"
+      content: "Halo"
     )
   end
 end

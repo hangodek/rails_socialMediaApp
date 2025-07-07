@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "comments_pagy_container_#{@pagy.page}" do %>
+  <% if @comments %>
+    <%= render @comments %>
+    <%= render "next_comment", post: @post %>
+  <% end %>
+<% end %>

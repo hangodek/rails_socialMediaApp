@@ -1,0 +1,10 @@
+<% if @pagy.next %>
+  <%= turbo_frame_tag(
+    "comments_pagy_container_#{@pagy.next}",
+    loading: :lazy,
+    src: post_comments_path(post, page: @pagy.next),
+    target: "_top"
+  ) do %>
+    <p>Loading...</p>
+  <% end %>
+<% end %>
