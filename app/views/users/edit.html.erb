@@ -12,7 +12,7 @@
           <div class="avatar mb-6">
             <div class="w-32 h-32 rounded-full ring ring-primary/30 ring-offset-base-100 ring-offset-2">
             <% if @user.avatar.attached? && @user.avatar.persisted? %>
-              <%= image_tag @user.avatar, size: "200x16", class: "w-full h-full  rounded-full" %>
+              <%= image_tag @user.avatar, size: "200x16", class: "w-full h-full rounded-full" %>
             <% else %>
               <!-- Default Avatar Image -->
               <%= image_tag "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp", class: "w-full h-full rounded-full" %>

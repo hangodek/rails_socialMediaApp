@@ -8,13 +8,25 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+require "faker"
+
 puts "Seeding database....."
 
+# 15.times do
+#   Post.find(33) do |post|
+#     post.comments.create!(
+#       user: User.find(1),
+#       content: "Halo"
+#     )
+#   end
+# end
+#
+
 15.times do
-  Post.find(33) do |post|
-    post.comments.create!(
-      user: User.find(1),
-      content: "Halo"
-    )
-  end
+  email = "#{Faker::Internet.username(specifier: 5..10)}@gmail.com"
+  User.create!(
+  username: Faker::Internet.username,
+  email_address: email,
+  email_confirmation: email,  # Use the same email for confirmation
+  password: "123123")
 end
