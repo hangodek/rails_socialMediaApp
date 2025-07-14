@@ -10,14 +10,18 @@
           <!-- Profile Picture -->
           <div class="avatar">
             <div class="w-32 h-32 rounded-full ring ring-primary/20 ring-offset-2">
-              <img src="/placeholder.svg?height=128&width=128" alt="Profile Picture" />
+              <% if @user%>
+                <% if @user.avatar.attached? && @user.avatar.persisted? %>
+                  <%= image_tag @user.avatar %>
+                <% end %>
+              <% end %>
             </div>
           </div>
           
           <!-- Profile Info -->
           <div class="flex-1 text-center md:text-left">
             <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
-              <h1 class="text-2xl font-bold">Alex Johnson</h1>
+              <h1 class="text-2xl font-bold"><%= @user.username %></h1>
               <div class="flex gap-2 justify-center md:justify-start">
                 <button class="btn btn-primary btn-sm">Follow</button>
                 <button class="btn btn-outline btn-sm">Message</button>
@@ -29,24 +33,39 @@
               </div>
             </div>
             
-            <p class="text-base-content/60 mb-4">@alexjohnson</p>
-            
-            <p class="text-sm mb-4 max-w-md">
-              Photography enthusiast and coffee lover. Sharing my journey through life's beautiful moments. Always looking for the next adventure! 📸☕
-            </p>
+            <p class="text-base-content/60 mb-4">@<%= @user.username %></p>
+            <div id="user_bio">
+              <% if @user.bio %>
+                <p><%= @user.bio %></p>
+                <% if @user == Current.user %>
+                  <%= button_to edit_bio_user_path, data: {turbo_stream: true}, class: "hover:cursor-pointer" do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                    </svg>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <p>This user has not set a bio yet.</p>
+                <% if @user == Current.user %>
+                  <%= button_to edit_bio_user_path, data: {turbo_stream: true}, class: "hover:cursor-pointer" do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                    </svg>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
             
             <!-- Stats -->
-            <div class="flex gap-6 justify-center md:justify-start text-sm">
+            <div class="flex gap-6 mt-4 justify-center md:justify-start text-sm">
               <div class="text-center">
-                <span class="font-bold text-lg">127</span>
+                <span class="font-bold text-lg"><%= @user.posts.count %></span>
                 <p class="text-base-content/60">Posts</p>
               </div>
               <div class="text-center">
-                <span class="font-bold text-lg">2.4K</span>
+                <span class="font-bold text-lg"><%= @user.followers.count %></span>
                 <p class="text-base-content/60">Followers</p>
               </div>
               <div class="text-center">
-                <span class="font-bold text-lg">892</span>
+                <span class="font-bold text-lg"><%= @user.followings.count %></span>
                 <p class="text-base-content/60">Following</p>
               </div>
             </div>
@@ -58,167 +77,86 @@
     <!-- Profile Navigation -->
     <div class="tabs tabs-bordered mb-6">
       <a class="tab tab-active">Posts</a>
-      <a class="tab">About</a>
-      <a class="tab">Photos</a>
     </div>
     
+
     <!-- Posts Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <!-- Post 1 -->
-      <div class="card bg-base-100 shadow-lg border border-base-200">
-        <figure>
-          <img src="/placeholder.svg?height=200&width=300" alt="Post" class="w-full h-48 object-cover" />
-        </figure>
-        <div class="card-body p-4">
-          <p class="text-sm">Just captured this amazing sunset during my evening walk! 🌅</p>
-          <div class="flex items-center justify-between mt-3 text-xs text-base-content/60">
-            <span>2 hours ago</span>
-            <div class="flex gap-3">
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                24
-              </span>
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M21,6H3A1,1 0 0,0 2,7V17A1,1 0 0,0 3,18H21A1,1 0 0,0 22,17V7A1,1 0 0,0 21,6M20,16H4V8H20V16M6,10V14H8V10H6M10,10V14H12V10H10M14,10V14H16V10H14M18,10V14H20V10H18Z"/>
-                </svg>
-                8
-              </span>
+      <% if @user.posts.any? %>
+        <% @user.posts.each do |post| %>
+          <div class="card h-full bg-base-100 shadow-lg border border-base-200 transition-all hover:-translate-y-2">
+            <%= link_to post_path(post) do %>
+              <figure class="h-48">
+                <% if post.content.embeds.any? %>
+                  <%= image_tag post.content.embeds.first, class: "w-full h-full object-cover" %>
+                <% else %>
+                  <%= image_tag "no_image.jpeg", class: "w-full h-full object-cover" %>
+                <% end %>
+              </figure>
+            <% end %>
+            <div class="card-body p-4">
+              <p class="text-sm line-clamp-2"><%= post.content.to_plain_text.gsub(/\[.*?\.(jpg|jpeg|png|gif|pdf|doc|docx|txt|mp4|mov|avi|webp)\]/i, '').strip %></p>
+              <div class="flex items-center justify-between mt-3 text-xs text-base-content/60">
+                <span><%= time_ago_in_words(post.created_at) %></span>
+                <div class="flex gap-3">
+                  <% if post.likes.find_by(user: Current.user) %>
+                    <div id="unlike-btn-for-post-<%= post.id %>">
+                      <%= button_to unlike_post_path(post), method: :delete, class: "flex items-center gap-2 text-base-content/60 hover:text-primary transition-colors cursor-pointer", data: {turbo_stream: true } do %>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        <span class="text-xs"><%= post.likes.count %></span>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <div id="like-btn-for-post-<%= post.id %>">
+                      <%= button_to like_post_path(post), class: "flex items-center gap-2 text-base-content/60 hover:text-primary transition-colors cursor-pointer", data: {turbo_stream: true} do %>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        <span class="text-xs"><%= post.likes.count %></span>
+                      <% end %>
+                    </div>
+                  <% end %>
+                  
+                  <button class="flex items-center gap-2 text-base-content/60 hover:text-secondary transition-colors cursor-pointer" onclick="document.getElementById('comment_modal_for_post_<%= post.id %>').showModal()">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    <span class="text-xs"><%= post.comments.count %></span>
+                  </button>
+                  <dialog id="comment_modal_for_post_<%= post.id %>" class="modal">
+                    <div id="comment_container_for_post_<%= post.id %>" class="modal-box justify-end overflow-auto max-w-96 max-h-96">
+                      
+                      <%# Comment partial %>
+                      <%= turbo_frame_tag(
+                        "comments_pagy_container_1",
+                        loading: :lazy,
+                        src: post_comments_path(post, page: 1),
+                        target: "_top"
+                      ) do %>
+                        Loading....
+                      <% end %>
+
+                      <%= form_with model: [post, post.comments.build], data: {controller: "resetform", action: "turbo:submit-end->resetform#reset"} do |form| %>
+                        <div class="flex gap-1 mt-4">
+                          <%= form.text_field :content, class: "input grow", placeholder: "What's on your mind, #{Current.user.username}" %>
+                          <%= form.submit ">", class: "btn"%>
+                        </div>
+                      <% end %>
+                    </div>
+                    <form method="dialog" class="modal-backdrop">
+                      <button>close</button>
+                    </form>
+                  </dialog>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <!-- Post 2 -->
-      <div class="card bg-base-100 shadow-lg border border-base-200">
-        <div class="card-body p-4">
-          <p class="text-sm mb-3">Working on a new photography project! Excited to share the results soon. 📷</p>
-          <div class="flex items-center justify-between text-xs text-base-content/60">
-            <span>1 day ago</span>
-            <div class="flex gap-3">
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                15
-              </span>
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M21,6H3A1,1 0 0,0 2,7V17A1,1 0 0,0 3,18H21A1,1 0 0,0 22,17V7A1,1 0 0,0 21,6M20,16H4V8H20V16M6,10V14H8V10H6M10,10V14H12V10H10M14,10V14H16V10H14M18,10V14H20V10H18Z"/>
-                </svg>
-                3
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Post 3 -->
-      <div class="card bg-base-100 shadow-lg border border-base-200">
-        <figure>
-          <img src="/placeholder.svg?height=200&width=300" alt="Post" class="w-full h-48 object-cover" />
-        </figure>
-        <div class="card-body p-4">
-          <p class="text-sm">Coffee and creativity go hand in hand ☕ What fuels your creative process?</p>
-          <div class="flex items-center justify-between mt-3 text-xs text-base-content/60">
-            <span>3 days ago</span>
-            <div class="flex gap-3">
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                32
-              </span>
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M21,6H3A1,1 0 0,0 2,7V17A1,1 0 0,0 3,18H21A1,1 0 0,0 22,17V7A1,1 0 0,0 21,6M20,16H4V8H20V16M6,10V14H8V10H6M10,10V14H12V10H10M14,10V14H16V10H14M18,10V14H20V10H18Z"/>
-                </svg>
-                12
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Post 4 -->
-      <div class="card bg-base-100 shadow-lg border border-base-200">
-        <figure>
-          <img src="/placeholder.svg?height=200&width=300" alt="Post" class="w-full h-48 object-cover" />
-        </figure>
-        <div class="card-body p-4">
-          <p class="text-sm">Exploring new places and capturing memories along the way 🗺️</p>
-          <div class="flex items-center justify-between mt-3 text-xs text-base-content/60">
-            <span>1 week ago</span>
-            <div class="flex gap-3">
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                45
-              </span>
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M21,6H3A1,1 0 0,0 2,7V17A1,1 0 0,0 3,18H21A1,1 0 0,0 22,17V7A1,1 0 0,0 21,6M20,16H4V8H20V16M6,10V14H8V10H6M10,10V14H12V10H10M14,10V14H16V10H14M18,10V14H20V10H18Z"/>
-                </svg>
-                18
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Post 5 -->
-      <div class="card bg-base-100 shadow-lg border border-base-200">
-        <div class="card-body p-4">
-          <p class="text-sm mb-3">Grateful for all the support from this amazing community! Thank you everyone for following along on this journey. 🙏✨</p>
-          <div class="flex items-center justify-between text-xs text-base-content/60">
-            <span>2 weeks ago</span>
-            <div class="flex gap-3">
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                67
-              </span>
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M21,6H3A1,1 0 0,0 2,7V17A1,1 0 0,0 3,18H21A1,1 0 0,0 22,17V7A1,1 0 0,0 21,6M20,16H4V8H20V16M6,10V14H8V10H6M10,10V14H12V10H10M14,10V14H16V10H14M18,10V14H20V10H18Z"/>
-                </svg>
-                25
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Post 6 -->
-      <div class="card bg-base-100 shadow-lg border border-base-200">
-        <figure>
-          <img src="/placeholder.svg?height=200&width=300" alt="Post" class="w-full h-48 object-cover" />
-        </figure>
-        <div class="card-body p-4">
-          <p class="text-sm">Behind the scenes of today's photoshoot. The magic happens in the details! 🎬</p>
-          <div class="flex items-center justify-between mt-3 text-xs text-base-content/60">
-            <span>3 weeks ago</span>
-            <div class="flex gap-3">
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                28
-              </span>
-              <span class="flex items-center gap-1">
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M21,6H3A1,1 0 0,0 2,7V17A1,1 0 0,0 3,18H21A1,1 0 0,0 22,17V7A1,1 0 0,0 21,6M20,16H4V8H20V16M6,10V14H8V10H6M10,10V14H12V10H10M14,10V14H16V10H14M18,10V14H20V10H18Z"/>
-                </svg>
-                9
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+        <% end %>
+      <% else %>
+        <h2 class="text-2xl font-bold text-center col-span-3">No Post yet!</h2>
+      <% end %>
     </div>
     
     <!-- Load More Button -->

@@ -1,6 +1,8 @@
 <div class="navbar bg-base-100 shadow-sm">
   <div class="flex-1">
-    <%= link_to "Social Media App", homepages_path, class: "btn btn-ghost text-xl" %>
+    <%= link_to homepages_path, class: "btn btn-ghost text-xl" do %>
+      <p>Sos<span class="text-red-500">nuk</span></p>
+    <% end %>
   </div>
   <div class="flex gap-2">
     <div class="dropdown dropdown-end">

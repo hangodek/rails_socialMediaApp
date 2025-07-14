@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
   resources :homepages, only: [ :index ]
-  resources :users, only: [ :show, :edit, :update ]
+  resources :users, only: [ :show, :edit, :update ] do
+    member do
+      post :edit_bio
+      patch :update_bio
+    end
+  end
   resource :session
   resource :registers, only: [ :new, :create ]
-  resources :posts, only: [ :create, :edit, :update, :destroy ] do
+  resources :posts, only: [ :show, :create, :edit, :update, :destroy ] do
     resources :comments, only: [ :index, :create, :update, :destroy ]
     member do
       post :like

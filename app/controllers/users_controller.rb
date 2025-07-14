@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:id])
+    @user = User.includes(posts: [ :rich_text_content, :likes, :comments ]).find(params[:id])
   end
 
   def edit
@@ -15,10 +15,28 @@ class UsersController < ApplicationController
     end
 
     if @user.update(user_information_params)
-      redirect_to edit_users_path, notice: "User updated successfully."
+      redirect_to edit_user_path, notice: "User updated successfully."
     else
       flash.now[:alert] = @user.errors.full_messages.to_sentence
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def edit_bio
+    @user = User.find(params.expect(:id))
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
+  def update_bio
+    @user = User.find(params.expect(:id))
+
+    if @user.update(params.expect(user: [ :bio ]))
+      respond_to do |format|
+        format.turbo_stream
+      end
     end
   end
 

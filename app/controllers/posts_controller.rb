@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+  def show
+    @post = Post.find(params[:id])
+  end
   def create
     @post = Post.new(add_post_params.merge(user: Current.user))
 

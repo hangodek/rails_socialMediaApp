@@ -1,0 +1,11 @@
+<%= turbo_stream.update "user_bio" do %>
+  <%= form_with model: @user, url: update_bio_user_path(@user), method: :patch, data: { turbo_stream: true }, local: false do |form| %>
+    <div class="flex flex-col gap-4">
+      <%= form.text_area :bio, placeholder: "Write your bio...", rows: 4, class: "textarea textarea-bordered w-full" %>
+      <div class="flex gap-2">
+        <%= form.submit "Save Bio", class: "btn btn-primary btn-sm" %>
+        <%= link_to "Cancel", user_path(@user),  class: "btn btn-ghost btn-sm", data: { turbo_stream: true } %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
