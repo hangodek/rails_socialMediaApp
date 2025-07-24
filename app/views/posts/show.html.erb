@@ -1,3 +1,186 @@
 <%= render "shared/navbar" %>
 
-
+<div class="min-h-screen bg-base-100 py-8">
+  <div class="container mx-auto max-w-2xl px-4">
+    
+    <!-- Back Button -->
+    <div class="mb-6">
+      <%= link_to user_path(@user), class: "btn btn-ghost btn-sm" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Profile
+      <% end %>
+    </div>
+    
+    <!-- Post Detail Card -->
+    <div class="card bg-base-100 shadow-lg border border-base-200">
+      <div class="card-body p-6">
+        
+        <!-- Post Header -->
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div class="avatar">
+              <div class="w-12 h-12 rounded-full">
+                <% if @user.avatar.attached? && @user.avatar.persisted? %>
+                  <%= image_tag @user.avatar %>
+                <% else %>
+                  <%= image_tag "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" %>
+                <% end %>
+                <img src="/placeholder.svg?height=48&width=48" alt="User avatar" />
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold"><%= @user.username %></h3>
+              <p class="text-sm text-base-content/60"><%= @user.username %> • <%= time_ago_in_words(@post.created_at)%> ago</p>
+            </div>
+          </div>
+          <div class="dropdown dropdown-end">
+            <button class="btn btn-ghost btn-sm btn-circle">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+              </svg>
+            </button>
+            <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-32">
+              <li><a class="text-sm">Edit Post</a></li>
+              <li><a class="text-sm">Share</a></li>
+              <li><a class="text-sm text-error">Delete</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Post Content -->
+        <div class="mb-6">
+          <%= @post.content %>
+        </div>
+        
+        <!-- Post Stats -->
+        <div class="flex items-center gap-6 mb-6 text-sm text-base-content/60">
+          <span><%= @post.likes.count %> likes </span>
+          <span><%= @post.comments.count %> comments </span>
+        </div>
+        
+        <!-- Post Actions -->
+        <div class="flex items-center justify-between py-3 border-y border-base-200 mb-6">
+          <button class="flex items-center gap-2 text-base-content/60 hover:text-primary transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            <span>Like</span>
+          </button>
+          <button class="flex items-center gap-2 text-base-content/60 hover:text-accent transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+            </svg>
+            <span>Share</span>
+          </button>
+        </div>
+        
+        <!-- Comments Section -->
+        <div class="space-y-4">
+          <h4 class="font-semibold text-lg">Comments</h4>
+          
+          <!-- Add Comment -->
+          <div class="flex gap-3">
+            <div class="avatar">
+              <div class="w-8 h-8 rounded-full">
+                <% if Current.user.avatar.attached? && Current.user.avatar.persisted? %>
+                  <%= image_tag Current.user.avatar %>
+                <% else %>
+                  <%= image_tag "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" %>
+                <% end %>
+              </div>
+            </div>
+            <div class="flex-1">
+              <textarea 
+                class="textarea textarea-bordered w-full resize-none" 
+                placeholder="Write a comment..."
+                rows="2"
+              ></textarea>
+              <div class="flex justify-end mt-2">
+                <button class="btn btn-primary btn-sm">Post Comment</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Comments List -->
+          <div class="space-y-4">
+            <!-- Comment 1 -->
+            <div class="flex gap-3">
+              <div class="avatar">
+                <div class="w-8 h-8 rounded-full">
+                  <img src="/placeholder.svg?height=32&width=32" alt="Commenter avatar" />
+                </div>
+              </div>
+              <div class="flex-1">
+                <div class="bg-base-200 rounded-lg p-3">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="font-semibold text-sm">Maria Rodriguez</span>
+                    <span class="text-xs text-base-content/60">1 hour ago</span>
+                  </div>
+                  <p class="text-sm">Absolutely stunning! The colors in this shot are incredible. You really captured the magic of that moment. 🌅</p>
+                </div>
+                <div class="flex items-center gap-4 mt-2 text-xs text-base-content/60">
+                  <button class="hover:text-primary">Like</button>
+                  <button class="hover:text-secondary">Reply</button>
+                  <span>2 likes</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Comment 2 -->
+            <div class="flex gap-3">
+              <div class="avatar">
+                <div class="w-8 h-8 rounded-full">
+                  <img src="/placeholder.svg?height=32&width=32" alt="Commenter avatar" />
+                </div>
+              </div>
+              <div class="flex-1">
+                <div class="bg-base-200 rounded-lg p-3">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="font-semibold text-sm">David Kim</span>
+                    <span class="text-xs text-base-content/60">45 minutes ago</span>
+                  </div>
+                  <p class="text-sm">What camera settings did you use for this shot? The lighting is perfect!</p>
+                </div>
+                <div class="flex items-center gap-4 mt-2 text-xs text-base-content/60">
+                  <button class="hover:text-primary">Like</button>
+                  <button class="hover:text-secondary">Reply</button>
+                  <span>1 like</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Comment 3 -->
+            <div class="flex gap-3">
+              <div class="avatar">
+                <div class="w-8 h-8 rounded-full">
+                  <img src="/placeholder.svg?height=32&width=32" alt="Commenter avatar" />
+                </div>
+              </div>
+              <div class="flex-1">
+                <div class="bg-base-200 rounded-lg p-3">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="font-semibold text-sm">Sarah Chen</span>
+                    <span class="text-xs text-base-content/60">30 minutes ago</span>
+                  </div>
+                  <p class="text-sm">This makes me want to go on a sunset walk right now! Beautiful work as always, Alex. 📸</p>
+                </div>
+                <div class="flex items-center gap-4 mt-2 text-xs text-base-content/60">
+                  <button class="hover:text-primary">Like</button>
+                  <button class="hover:text-secondary">Reply</button>
+                  <span>5 likes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Load More Comments -->
+          <div class="text-center pt-4">
+            <button class="btn btn-ghost btn-sm">Load More Comments</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
