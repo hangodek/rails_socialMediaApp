@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def show
-    @user = User.includes(posts: [ :rich_text_content, :likes, :comments ]).find(params[:id])
-    @posts = @user.posts.order(created_at: :desc)
+    @user = User.find(params[:id])
+    @posts = @user.posts.includes(:likes, :comments, rich_text_content: [ :embeds_attachments ]).order(created_at: :desc)
   end
 
   def edit
