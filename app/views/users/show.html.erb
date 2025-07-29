@@ -57,15 +57,15 @@
             <!-- Stats -->
             <div class="flex gap-6 mt-4 justify-center md:justify-start text-sm">
               <div class="text-center">
-                <span class="font-bold text-lg"><%= @user.posts.count %></span>
+                <span class="font-bold text-lg"><%= @user.posts.size %></span>
                 <p class="text-base-content/60">Posts</p>
               </div>
               <div class="text-center">
-                <span class="font-bold text-lg"><%= @user.followers.count %></span>
+                <span class="font-bold text-lg"><%= @user.followers.size %></span>
                 <p class="text-base-content/60">Followers</p>
               </div>
               <div class="text-center">
-                <span class="font-bold text-lg"><%= @user.followings.count %></span>
+                <span class="font-bold text-lg"><%= @user.followings.size %></span>
                 <p class="text-base-content/60">Following</p>
               </div>
             </div>
@@ -105,7 +105,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
-                        <span class="text-xs"><%= post.likes.count %></span>
+                        <span class="text-xs"><%= post.likes.size %></span>
                       <% end %>
                     </div>
                   <% else %>
@@ -114,7 +114,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
-                        <span class="text-xs"><%= post.likes.count %></span>
+                        <span class="text-xs"><%= post.likes.size %></span>
                       <% end %>
                     </div>
                   <% end %>
@@ -123,7 +123,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
-                    <span class="text-xs"><%= post.comments.count %></span>
+                    <span class="text-xs"><%= post.comments.size %></span>
                   </button>
                   <dialog id="comment_modal_for_post_<%= post.id %>" class="modal">
                     <div id="comment_container_for_post_<%= post.id %>" class="modal-box justify-end overflow-auto max-w-96 max-h-96">

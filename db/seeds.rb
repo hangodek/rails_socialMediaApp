@@ -25,7 +25,7 @@ puts "Seeding database....."
 15.times do
   email = "#{Faker::Internet.username(specifier: 5..10)}@gmail.com"
   User.create!(
-  username: Faker::Internet.username,
+  username: Faker::Internet.username(specifier: 6..10),
   email_address: email,
   email_confirmation: email,  # Use the same email for confirmation
   password: "123123")
