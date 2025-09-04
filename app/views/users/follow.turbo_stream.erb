@@ -1,0 +1,9 @@
+<%= turbo_stream.update "follow_btn_for_user_#{@user.id}" do %>
+  <%= button_to unfollow_user_path(@user), method: :delete, class: "btn btn-outline btn-sm", data: { turbo_stream: true } do %>
+    Unfollow
+  <% end %>
+<% end %>
+
+<%= turbo_stream.update "followers_count_for_user_#{@user.id}" do %>
+  <span class="font-bold text-lg"><%= @user.followers.size %></span>
+<% end %>

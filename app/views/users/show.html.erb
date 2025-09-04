@@ -10,10 +10,10 @@
           <!-- Profile Picture -->
           <div class="avatar">
             <div class="w-32 h-32 rounded-full ring ring-primary/20 ring-offset-2">
-              <% if @user%>
-                <% if @user.avatar.attached? && @user.avatar.persisted? %>
-                  <%= image_tag @user.avatar %>
-                <% end %>
+              <% if @user.avatar.attached? %>
+                <%= image_tag @user.avatar, class: "w-full h-full object-cover" %>
+              <% else %>
+                <%= image_tag "avatar.png", class: "w-full h-full object-cover" %>
               <% end %>
             </div>
           </div>
@@ -22,15 +22,31 @@
           <div class="flex-1 text-center md:text-left">
             <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
               <h1 class="text-2xl font-bold"><%= @user.username %></h1>
-              <div class="flex gap-2 justify-center md:justify-start">
-                <button class="btn btn-primary btn-sm">Follow</button>
-                <button class="btn btn-outline btn-sm">Message</button>
-                <button class="btn btn-ghost btn-sm btn-circle">
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                  </svg>
-                </button>
-              </div>
+              <% if @user != Current.user %>
+                <div class="flex gap-2 justify-center md:justify-start">
+                  <div id="follow_btn_for_user_<%= @user.id %>">
+                    <% if Current.user.followings.include?(@user) %>
+                      <%= button_to unfollow_user_path(@user), method: :delete, class: "btn btn-outline btn-sm", data: { turbo_stream: true } do %>
+                        Unfollow
+                      <% end %>
+                    <% else %>
+                      <%= button_to follow_user_path(@user), class: "btn btn-primary btn-sm", data: { turbo_stream: true } do %>
+                        Follow
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <button class="btn btn-outline btn-sm">Message</button>
+                  <button class="btn btn-ghost btn-sm btn-circle">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                  </button>
+                </div>
+              <% else %>
+                <div class="flex gap-2 justify-center md:justify-start">
+                  <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-outline btn-sm" %>
+                </div>
+              <% end %>
             </div>
             
             <p class="text-base-content/60 mb-4">@<%= @user.username %></p>
@@ -61,7 +77,9 @@
                 <p class="text-base-content/60">Posts</p>
               </div>
               <div class="text-center">
-                <span class="font-bold text-lg"><%= @user.followers.size %></span>
+                <div id="followers_count_for_user_<%= @user.id %>">
+                  <span class="font-bold text-lg"><%= @user.followers.size %></span>
+                </div>
                 <p class="text-base-content/60">Followers</p>
               </div>
               <div class="text-center">
@@ -82,7 +100,7 @@
 
     <!-- Posts Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <% if @posts %>
+      <% if @posts.any? %>
         <% @posts.each do |post| %>
           <div class="card h-full bg-base-100 shadow-lg border border-base-200 transition-all hover:-translate-y-2">
             <%= link_to post_path(post) do %>
@@ -155,13 +173,22 @@
           </div>
         <% end %>
       <% else %>
-        <h2 class="text-2xl font-bold text-center col-span-3">No Post yet!</h2>
+        <div class="col-span-full text-center py-12">
+          <div class="flex flex-col items-center gap-4">
+            <svg class="w-16 h-16 text-base-content/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <h3 class="text-xl font-semibold text-base-content/60">No posts yet</h3>
+            <p class="text-base-content/40">
+              <% if @user == Current.user %>
+                Start sharing your moments with the world!
+              <% else %>
+                This user hasn't shared any posts yet.
+              <% end %>
+            </p>
+          </div>
+        </div>
       <% end %>
-    </div>
-    
-    <!-- Load More Button -->
-    <div class="text-center mt-8">
-      <button class="btn btn-outline">Load More Posts</button>
     </div>
   </div>
 </div>

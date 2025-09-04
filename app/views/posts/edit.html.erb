@@ -1,0 +1,45 @@
+<%= render "shared/navbar" %>
+
+<div class="min-h-screen bg-base-100 py-8">
+  <div class="container mx-auto max-w-2xl px-4">
+    
+    <!-- Back Button -->
+    <div class="mb-6">
+      <%= link_to post_path(@post), class: "btn btn-ghost btn-sm" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Post
+      <% end %>
+    </div>
+    
+    <!-- Edit Post Card -->
+    <div class="card bg-base-100 shadow-lg border border-base-200">
+      <div class="card-body p-6">
+        <h2 class="card-title mb-6">Edit Post</h2>
+        
+        <%= form_with model: @post, class: "space-y-4" do |form| %>
+          <% if @post.errors.any? %>
+            <div class="alert alert-error">
+              <ul>
+                <% @post.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          
+          <div class="form-control">
+            <%= form.label :content, "Content", class: "label" %>
+            <%= form.rich_text_area :content, class: "w-full" %>
+          </div>
+          
+          <div class="flex gap-2 justify-end">
+            <%= link_to "Cancel", post_path(@post), class: "btn btn-ghost" %>
+            <%= form.submit "Update Post", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

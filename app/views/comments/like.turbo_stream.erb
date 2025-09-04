@@ -1,0 +1,11 @@
+<%= turbo_stream.update "comment_like_btn_#{@comment.id}" do %>
+  <%= button_to unlike_comment_path(@comment), method: :delete, 
+      class: "hover:text-primary text-red-500", 
+      data: { turbo_stream: true } do %>
+    Liked
+  <% end %>
+<% end %>
+
+<%= turbo_stream.update "comment_likes_count_#{@comment.id}" do %>
+  <span><%= pluralize(@comment.likes.count, 'like') %></span>
+<% end %>

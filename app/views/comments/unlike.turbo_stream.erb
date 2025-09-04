@@ -1,0 +1,11 @@
+<%= turbo_stream.update "comment_like_btn_#{@comment.id}" do %>
+  <%= button_to like_comment_path(@comment), 
+      class: "hover:text-primary", 
+      data: { turbo_stream: true } do %>
+    Like
+  <% end %>
+<% end %>
+
+<%= turbo_stream.update "comment_likes_count_#{@comment.id}" do %>
+  <span><%= pluralize(@comment.likes.count, 'like') %></span>
+<% end %>

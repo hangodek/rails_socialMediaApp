@@ -4,12 +4,20 @@ Rails.application.routes.draw do
     member do
       post :edit_bio
       patch :update_bio
+      post :follow
+      delete :unfollow
     end
   end
   resource :session
   resource :registers, only: [ :new, :create ]
   resources :posts, only: [ :show, :create, :edit, :update, :destroy ] do
     resources :comments, only: [ :index, :create, :update, :destroy ]
+    member do
+      post :like
+      delete :unlike
+    end
+  end
+  resources :comments, only: [ :destroy ] do
     member do
       post :like
       delete :unlike
