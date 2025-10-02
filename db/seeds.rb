@@ -22,11 +22,21 @@ puts "Seeding database....."
 # end
 #
 
-15.times do
+
+users = 15.times.map do
   email = "#{Faker::Internet.username(specifier: 5..10)}@gmail.com"
   User.create!(
-  username: Faker::Internet.username(specifier: 6..10),
-  email_address: email,
-  email_confirmation: email,  # Use the same email for confirmation
-  password: "123123")
+    username: Faker::Internet.username(specifier: 6..10),
+    email_address: email,
+    email_confirmation: email,  # Use the same email for confirmation
+    password: "123123"
+  )
+end
+
+users.each do |user|
+  rand(1..3).times do
+    post = user.posts.create!
+    post.content = Faker::Lorem.paragraph(sentence_count: rand(2..6))
+    post.save!
+  end
 end
