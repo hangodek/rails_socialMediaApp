@@ -3,7 +3,7 @@ class HomepagesController < ApplicationController
   def index
     if Current.user
       # @posts = Current.user.posts.order(created_at: :desc) This N+1 Queries, so freaking lag, below is the better way
-      @pagy, @posts = pagy_countless(Post.includes(:user).where(user: [ Current.user, Current.user.followings ]).order(created_at: :desc))
+      @pagy, @posts = pagy_countless(Post.includes(:user).where(user: [Current.user] + Current.user.followings.to_a).order(created_at: :desc))
 
       @suggested_users = User.where.not(id: Current.user.id).includes(:avatar_attachment).order("RANDOM()").limit(3)
     end
